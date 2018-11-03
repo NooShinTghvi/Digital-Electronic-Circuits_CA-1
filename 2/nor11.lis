@@ -1,0 +1,183 @@
+ ****** HSPICE -- A-2008.03 32-BIT (Feb 26 2008) winnt ******                   
+  Copyright (C) 2008 Synopsys, Inc. All Rights Reserved.                        
+  Unpublished-rights reserved under US copyright laws.
+  This program is protected by law and is subject to the 
+  terms and conditions of the license agreement found in:
+    C:\synopsys\Hspice_A-2008.03\license.warn
+  Use of this program is your acceptance to be bound by this 
+  license agreement. HSPICE is the trademark of Synopsys, Inc.
+  Input File: c:\users\mehrdad\desktop\b\nor11.sp                               
+ Init: read install configuration file: C:\synopsys\Hspice_A-2008.03\meta.cfg
+ Init: hspice initialization file: C:\synopsys\Hspice_A-2008.03\hspice.ini
+
+
+
+
+ ***** params ***** 
+ .param
+ +lmin=32n
+
+ +vdd=1.1v
+
+ ***** sources *****
+ vdd	1	0  	1.1
+
+ vin1	3	0	dc	1
+ vin2	2	0	dc	1
+
+ ***** inverter *****
+ .subckt inverter in	gnd 	node	out
+
+ mp5	out	in	node    node    pmos 	    l='lmin'  w='4*lmin'	
+
+ mn6	out     in      gnd     gnd     nmos        l='lmin'  w='2*lmin'
+
+ .ends inverter
+
+ ***** nor gate *****
+ mp1	5	2	1	1	pmos	l='lmin'	w='8*lmin'	
+
+ mp2     4  	3       5     	5    	pmos	l='lmin'     	w='8*lmin'
+
+
+ mn3	4	3	0	0     	nmos	l='lmin'	w='2*lmin'
+
+ mn4     4    	2       0    	0     	nmos    l='lmin'     	w='2*lmin'
+
+
+ x	4	0	1 	6 	inverter
+
+ ***** type of analysis ***** 
+ .tran	1p	200n 	1p  
+ .op
+
+ .end
+
+ ***********************************************************************
+ ** runlvl is invoked, you can disable it by:
+      a) Add option runlvl=0 to your current simulation job.
+      b) Copy $installdir/hspice.ini to your HOME directory and
+         customize it by adding option runlvl=0, which disables
+         it for all of your simulation jobs.
+      c) Re-invoke $installdir/bin/config program and unselect the
+         option runlvl setting in box 'hspice.ini' which disables
+         it for whole group simulation jobs.
+
+ ** runlvl is invoked, some options are ignored or automatically set:
+      Options below are automatically set(user setting will overwrite them):
+      if runlvl=6,            .option bypass=0
+      if runlvl=[1|2|3|4|5],  .option bypass=2
+
+      Options below are ignored, they are replaced by automated algorithms:
+        lvltim    dvdt      ft    fast   trtol  absvar  relvar
+          relq  chgtol    dvtr    imin    itl3    rmax
+
+ ** runlvl is invoked, actual option value used by HSPICE are:
+       runlvl= 3       bypass= 2      mbypass=   2.00   bytol= 100.00u
+ ***********************************************************************
+
+1****** HSPICE -- A-2008.03 32-BIT (Feb 26 2008) winnt ******                   
+ ******  
+ * or - 11                                                                      
+  ******  circuit name directory                                                
+ ******  
+ circuit number to circuit name directory
+   number circuitname                     definition         multiplier
+        0 main circuit
+        1 x.                              inverter           1.00 
+
+ **warning** recommend to set start explicitly:
+             .TRAN tstep tstop START=val
+
+
+ ** warning** associated with encrypted blocks were suppressed
+
+ 
+      
+  Opening plot unit= 79
+ file=c:\users\mehrdad\desktop\b\nor11.pa0                                     
+
+1****** HSPICE -- A-2008.03 32-BIT (Feb 26 2008) winnt ******                   
+ ******  
+ * or - 11                                                                      
+  ******  operating point information      tnom=  25.000 temp=  25.000          
+ ******  
+ ***** operating point status is all       simulation time is     0.     
+    node    =voltage      node    =voltage      node    =voltage
+
+ +0:1       =   1.1000  0:2       =   1.0000  0:3       =   1.0000 
+ +0:4       =   8.8545u 0:5       = 893.2598m 0:6       =   1.0998 
+
+
+ ****  voltage sources
+
+ subckt                                   
+ element  0:vdd      0:vin1     0:vin2    
+  volts      1.1000     1.0000     1.0000 
+  current  -36.8051n   -1.0667n   -1.0502n
+  power     40.4856n    1.0667n    1.0502n
+
+     total voltage source power dissipation=   42.6024n       watts
+
+
+
+
+ **** mosfets
+
+
+ subckt                                               x          x         
+ element  0:mp1      0:mp2      0:mn3      0:mn4      1:mp5      1:mn6     
+ model    0:pmos     0:pmos     0:nmos     0:nmos     0:pmos     0:nmos    
+ region       Cutoff     Cutoff     Linear     Linear     Linear     Cutoff
+  id        -3.4818n   -3.4812n    2.5558n    2.5558n  -33.3105n   32.7589n
+  ibs     -2.033e-25 -8.474e-25  2.075e-26  2.075e-26 -5.422e-25  1.240e-24
+  ibd      216.7370f  903.2509f  -12.3003a  -12.3003a  277.5458a   -1.1098p
+  vgs     -100.0000m  106.7402m    1.0000     1.0000    -1.1000     8.8545u
+  vds     -206.7402m -893.2509m    8.8545u    8.8545u -200.0017u    1.0998 
+  vbs        0.         0.         0.         0.         0.         0.     
+  vth     -375.1235m -190.1434m  494.8966m  494.8966m -430.7757m  252.7553m
+  vdsat    -46.1915m  -45.4244m  279.7156m  279.7156m -484.0220m   38.0257m
+  vod      275.1235m  296.8836m  505.1034m  505.1034m -669.2154m -252.7464m
+  beta     768.0796u    1.0213m    2.0913m    2.0913m  316.8097u    3.7851m
+  gam eff  400.0000m  400.0000m  400.0000m  400.0000m  400.0000m  400.0000m
+  gm        80.5427n   81.1098n    1.1974n    1.1974n   30.1070n  717.7572n
+  gds       24.4749n   25.9238n  288.6415u  288.6415u  166.5293u  175.4107n
+  gmb       18.0116n   18.6787n  445.4680p  445.4680p   10.4372n  168.9317n
+  cdtot    201.6982a  160.7493a   81.3852a   81.3852a  171.6287a   37.5509a
+  cgtot    201.1649a  159.8119a   69.1762a   69.1762a  154.6284a   37.6712a
+  cstot    305.5021a  285.9658a   76.4341a   76.4341a  159.9621a   71.4310a
+  cbtot    343.0049a  329.1603a   87.3880a   87.3880a  174.8532a   80.9719a
+  cgs      101.1163a   81.5776a   38.6941a   38.6941a   90.0389a   20.3374a
+  cgd       81.5670a   57.1074a   29.9974a   29.9974a   63.8039a   12.5058a
+
+
+
+
+          ***** job concluded
+1****** HSPICE -- A-2008.03 32-BIT (Feb 26 2008) winnt ******                   
+ ******  
+ * or - 11                                                                      
+  ******  job statistics summary           tnom=  25.000 temp=  25.000          
+ ******  
+
+           total memory used        172 kbytes
+
+  # nodes =      31 # elements=       9
+  # diodes=       0 # bjts    =       0 # jfets   =       0 # mosfets =       6
+  # va device =       0
+
+    analysis           time    # points   tot. iter  conv.iter
+
+    op point           0.05           1           8
+    transient          0.07      200000          60          30 rev=         0
+    readin             0.01
+    errchk             0.00
+    setup              0.01
+    output             0.00
+           total cpu time          0.13 seconds
+           total elapsed time         1 seconds
+               job started at  13:06:32 11/02/2018
+               job ended   at  13:06:32 11/02/2018
+
+
+ Init: hspice initialization file: C:\synopsys\Hspice_A-2008.03\hspice.ini
