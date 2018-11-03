@@ -1,0 +1,46 @@
+* OR - 00
+***** Library *****
+.prot
+
+.inc '32nm_bulk.pm'
+
+.unprot
+***** Params ***** 
+.param
++Lmin=32n
+
++Vdd=1.1V
+
+***** Sources *****
+Vdd	1	0  	1.1
+
+Vin1	3	0	DC	0
+Vin2	2	0	DC	0
+
+***** INVERTER *****
+.SUBCKT inVerTer in	GND 	NODE	OUT
+
+Mp5	OUT	IN	NODE    NODE    pmos 	    l='Lmin'  w='4*Lmin'	
+
+Mn6	OUT     IN      GND     GND     nmos        l='Lmin'  w='2*Lmin'
+
+.ENDS inVerTer
+
+***** NOR GATE *****
+Mp1	5	2	1	1	pmos	l='Lmin'	w='8*Lmin'	
+
+Mp2     4  	3       5     	5    	pmos	l='Lmin'     	w='8*Lmin'
+
+
+Mn3	4	3	0	0     	nmos	l='Lmin'	w='2*Lmin'
+
+Mn4     4    	2       0    	0     	nmos    l='Lmin'     	w='2*Lmin'
+
+
+X	4	0	1 	6 	inVerTer
+
+***** Type of Analysis ***** 
+.tran	1p	200n 	1p  
+.op
+
+.end
